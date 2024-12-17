@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 use function Ramsey\Uuid\v1;
@@ -9,11 +10,14 @@ use function Ramsey\Uuid\v1;
 class FrontEndController extends Controller
 {
     public function index(){
-        return view('index');
+        $products = Products::all();
+        return view('index',['products'=>$products]);
     }
 
     public function products(){
-        return view('products');
+
+        $products = Products::all();
+        return view('products',['products'=>$products]);
     }
 
     public function cart(){
