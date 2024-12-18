@@ -28,8 +28,10 @@ class FrontEndController extends Controller
         return view('about');
     }
     
-    public function single_product(){
-        return view('single_product');
+    public function single_product($id){
+
+        $product = Products::find($id);
+        return view('single_product',['product'=>$product]);
     }
 
     public function checkout(){

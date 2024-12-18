@@ -16,12 +16,12 @@ return new class extends Migration
 
             $table->integer('order_id');
             $table->integer('product_id');
-            $table->integer('product_name');
+            $table->string('product_name');
             $table->decimal('product_price',8,2);
             $table->integer('product_image');
             $table->integer('product_quantity');
             $table->date('order_date');
-            
+
             $table->timestamps();
         });
     }
