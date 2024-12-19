@@ -37,4 +37,71 @@ class FrontEndController extends Controller
     public function checkout(){
         return view('checkout');
     }
+
+    public function add_to_cart(Request $request){
+//if session exists
+        if($request->session()->has('cart')){
+
+            $cart = $request->session()->get('cart');
+            $product_ids = array_column($cart,'id');
+
+            if(in_array($request->id,$product_ids)){
+  
+                $id=$request->id;
+                $name=$request->name;
+                $image=$request->image;
+                $quantity=$request->quantity;
+                ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
+    
+                $product_array =  array(
+    
+                    'id'=> $id,
+                    'name'=> $name,
+                    'image'=> $image,
+                    'quantity'=> $quantity,
+                    'price'=> $price,
+                );
+    
+                $cart[$request->id] = $product_array;
+    
+                $request->session()->put('cart',$cart);
+    
+                return view('cart');
+
+            }
+
+            else{
+
+                return redirect()->back()->withErrors(['message'=>"muji pailai xa "]);
+
+            }
+          
+
+        }
+//if session  doesnot exists 
+        else{
+
+            $id=$request->id;
+            $name=$request->name;
+            $image=$request->image;
+            $quantity=$request->quantity;
+            ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
+
+            $product_array =  array(
+
+                'id'=> $id,
+                'name'=> $name,
+                'image'=> $image,
+                'quantity'=> $quantity,
+                'price'=> $price,
+            );
+
+            $cart[$request->id] = $product_array;
+
+            $request->session()->put('cart',$cart);
+
+            return view('cart');
+
+        }
+    }
 }
