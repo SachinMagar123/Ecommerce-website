@@ -97,11 +97,21 @@ class FrontEndController extends Controller
             );
 
             $cart[$request->id] = $product_array;
-
-            $request->session()->put('cart',$cart);
+            $request->session()->put('cart', $cart);
 
             return view('cart');
-
         }
+    }
+
+    public  function calculateTotal(Request $request){
+      $cart = Session()->get('cart');
+
+      $totalprice=0;
+      foreach($cart as $item){
+        $totalprice += $item['price'] * $item['quantity'];
+      }
+
+      $request->session()->put('totalprice',$totalprice);
+   
     }
 }
