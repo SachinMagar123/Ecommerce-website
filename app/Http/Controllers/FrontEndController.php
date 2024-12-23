@@ -38,64 +38,143 @@ class FrontEndController extends Controller
         return view('checkout');
     }
 
-    public function add_to_cart(Request $request){
-//if session exists
-        if($request->session()->has('cart')){
+//     public function add_to_cart(Request $request){
+// //if session exists
+//         if($request->session()->has('cart')){
 
-            $cart = $request->session()->get('cart');
-            $product_ids = array_column($cart,'id');
+//             $cart = $request->session()->get('cart');
+//             $product_ids = array_column($cart,'id');
 
-            if(in_array($request->id,$product_ids)){
+//             if(in_array($request->id,$product_ids)){
   
-                $id=$request->id;
-                $name=$request->name;
-                $image=$request->image;
-                $quantity=$request->quantity;
-                ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
+//                 $id=$request->id;
+//                 $name=$request->name;
+//                 $image=$request->image;
+//                 $quantity=$request->quantity;
+//                 ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
     
-                $product_array =  array(
+//                 $product_array =  array(
     
-                    'id'=> $id,
-                    'name'=> $name,
-                    'image'=> $image,
-                    'quantity'=> $quantity,
-                    'price'=> $price,
-                );
+//                     'id'=> $id,
+//                     'name'=> $name,
+//                     'image'=> $image,
+//                     'quantity'=> $quantity,
+//                     'price'=> $price,
+//                 );
     
-                $cart[$request->id] = $product_array;
+//                 $cart[$request->id] = $product_array;
     
-                $request->session()->put('cart',$cart);
-    
-                return view('cart');
+//                 $request->session()->put('cart',$cart);
 
-            }
+//                 $this-> calculateTotal($request);
+    
+//                 return view('cart');
+//                 // return redirect('/cart')->withErrors(['message'=>"muji pailai xa "]);
 
-            else{
+//             }
 
-                return redirect()->back()->withErrors(['message'=>"muji pailai xa "]);
+//             else{
 
-            }
+//                 return redirect()->back()->withErrors(['message'=>"muji pailai xa "]);
+
+//             }
           
 
+//         }
+// //if session  doesnot exists 
+//         else{
+
+//             $id=$request->id;
+//             $name=$request->name;
+//             $image=$request->image;
+//             $quantity=$request->quantity;
+//             ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
+
+//             $product_array =  array(
+
+//                 'id'=> $id,
+//                 'name'=> $name,
+//                 'image'=> $image,
+//                 'quantity'=> $quantity,
+//                 'price'=> $price,
+//             );
+
+//             $cart[$request->id] = $product_array;
+
+//             $request->session()->put('cart',$cart);
+
+//             $this-> calculateTotal($request);
+
+//             return view('cart');
+
+//         }
+//     }
+
+    public function remove_from_cart(Request $request){
+        $cart = $request->session()->get('cart');
+        $id_to_delete = $request->id;
+        unset($cart[$id_to_delete]);
+        
+        $request->session()->put('cart',$cart);
+
+        return redirect('/cart')->withErrors(['message'=>"Product removed from cart"]);
+ 
+    }
+
+public function add_to_cart(Request $request)
+    {
+        // dd('Here');
+        // dd($request->all());
+
+        // if session exist
+        if ($request->session()->has('cart')) {
+
+            $cart = $request->session()->get('cart');
+            $product_ids = array_column($cart, 'id');
+
+            if (!in_array($request->id, $product_ids)) {
+
+                $id = $request->id;
+                $name = $request->name;
+                $image = $request->image;
+                $quantity = $request->quantity;
+                ($request->sale_price != null) ? $price = $request->sale_price : $price = $request->price;
+
+                $product_array = array(
+                    'id' => $id,
+                    'name' => $name,
+                    'image' => $image,
+                    'quantity' => $quantity,
+                    'price' => $price,
+                    // 'log' => 'this',
+                );
+                $cart[$request->id] = $product_array;
+                $request->session()->put('cart', $cart);
+
+                $this->calculateTotal($request);
+
+                return view('cart');
+            } else {
+                return redirect()->back()->withErrors(['message' => "Product already added to cart"]);
+            }
         }
-//if session  doesnot exists 
-        else{
+        // if session doesnt exist
+        else {
+            $id = $request->id;
+            $name = $request->name;
+            $image = $request->image;
+            $quantity = $request->quantity;
+            ($request->sale_price != null) ? $price = $request->sale_price : $price = $request->price;
 
-            $id=$request->id;
-            $name=$request->name;
-            $image=$request->image;
-            $quantity=$request->quantity;
-            ($request->sale_price != null)? $price=$request->sale_price : $price = $request->price ;
-
-            $product_array =  array(
-
-                'id'=> $id,
-                'name'=> $name,
-                'image'=> $image,
-                'quantity'=> $quantity,
-                'price'=> $price,
+            $product_array = array(
+                'id' => $id,
+                'name' => $name,
+                'image' => $image,
+                'quantity' => $quantity,
+                'price' => $price,
+                // 'log' => 'this',
             );
-
+            // dd($product_array);
             $cart[$request->id] = $product_array;
             $request->session()->put('cart', $cart);
 

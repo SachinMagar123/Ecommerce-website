@@ -24,7 +24,7 @@
                                 @endif
                                 <!-- <a class="btn" href="#">Buy Now</a> -->
 
-                                <form action="{{route('add_to_cart')}}" method="Post">
+                                <form action="{{route('add_to_cart')}}" method="POST">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$product->id}}" >
                                     <input type="hidden" name="name" value="{{$product->name}}" >
