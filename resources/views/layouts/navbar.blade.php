@@ -1,7 +1,7 @@
 <div id="nav">
         <div class="container-fluid">
             <div id="logo" class="pull-left">
-                <a href="index.html"><img src="img/logo.png" alt="Logo" /></a>
+                <a href="{{url('/')}}"><img src="img/logo.png" alt="Logo" /></a>
             </div>
 
             <nav id="nav-menu-container">
