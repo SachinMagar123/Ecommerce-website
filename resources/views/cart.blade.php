@@ -51,8 +51,10 @@
                             </td>
 
                             <td>
-                                <form>
-                                    <input type="number" name="quantity" value="1">
+                                <form action="{{route('update_cart')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$product['id']}}">
+                                    <input type="number" name="quantity" value="{{$product['quantity']}}">
                                     <input type="submit" value="edit" class="edit-btn" name="edit_product_quantity_btn">
                                 </form>
                             </td>
@@ -78,7 +80,7 @@
                         @if(session()->has('totalprice'))
                         
                         <td> 
-                        Rs{{Session::get('totalprice')}}
+                        Rs{{Session()->get('totalprice')}}
                        </td>
                         @endif
                 </tr>

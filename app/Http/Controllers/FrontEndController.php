@@ -191,6 +191,32 @@ public function add_to_cart(Request $request)
       }
 
       $request->session()->put('totalprice',$totalprice);
+
+    //   dd($request->session()->get('totalprice'));
    
     }
+
+    public function update_cart(Request $request){
+
+
+        if($request->quantity == 0){
+            return redirect()->back()->withErrors(['message'=>"Quantity cannot be zero"]);
+        }
+
+        elseif($request->quantity < 0){
+            return redirect()->back()->withErrors(['message'=>"Quantity cannot be negative"]);
+        }
+
+        $cart = $request->session()->get('cart');
+        $id_to_update = $request->id;
+        $cart[$id_to_update]['quantity'] = 0;
+        $cart[$id_to_update]['quantity'] = $request->quantity;
+        $cart[$id_to_update]['price'] = $cart[$id_to_update]['price'] * $request->quantity;
+
+        $request->session()->put('cart',$cart);
+
+        return view('cart');
+        // dd($cart[$id_to_update]);
+        // dd($cart);
+           }
 }
