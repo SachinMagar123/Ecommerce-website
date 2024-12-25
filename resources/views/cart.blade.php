@@ -92,7 +92,7 @@
 
             <div class="checkout-container">
         
-                <form >
+                <form action="{{route('checkout')}}" method="GET">
                     <input type="submit" class="btn checkout-btn" value="Checkout" name="">
                 </form>
             

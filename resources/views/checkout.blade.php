@@ -90,8 +90,10 @@
 
 
                 <div class="form-group checkout-btn-container">
-                    <p>Total amount: $199</p>
-                    <input type="submit" class="btn" id="checkout-btn" name="checkout_btn" value="Checkout">
+                @if(Session::has('totalprice'))
+                        <p>Rs {{Session::get('totalprice')}}</p>
+                        <input type="submit" class="btn" id="checkout-btn" name="checkout_btn" value="Place Order">
+                        @endif
                 </div>
         
             </form>
