@@ -8,10 +8,12 @@ class PaymentController extends Controller
 {
     public function payment(){
 
+        return view('payment');
     }
 
     public function processPayment(){
 
+        return view('processPayment');
     }
 
     public function pay(Request $request){
