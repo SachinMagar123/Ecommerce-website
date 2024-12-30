@@ -174,7 +174,7 @@ class FrontEndController extends Controller
             foreach($cart as $item){
                 $order_item = new OrderItem();
 
-                $order_item->id  = $order->id;
+                $order_item->order_id  = $order->id;
                 $order_item->product_name = $item['name'];
                 $order_item->product_id = $item['id'];
                 $order_item->product_price = $item['price'];
@@ -185,6 +185,7 @@ class FrontEndController extends Controller
                 $order_item->save();                
 
          }  
-
+         $request->session()->put('order_id', $order->id);
+         return view('payment');
 }
 }
