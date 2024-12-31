@@ -16,7 +16,7 @@
         </div>
 
         <div class="mx-auto container">
-            <form id="checkout-form">
+            <form id="checkout-form" route="{{route('payment')}}">
              
                 <div class="form-group checkout-small-element">
                     <label for="">Name</label>
@@ -44,8 +44,8 @@
                 </div>
 
 
-                <div class="form-group checkout-btn-container">
-                @if(Session::has('totalprice'))
+                <div class="form-group checkout-btn-container" >
+                      @if(Session::has('totalprice'))
                         <p>Rs {{Session::get('totalprice')}}</p>
                         <input type="submit" class="btn" id="checkout-btn" name="checkout_btn" value="Place Order">
                         @endif
